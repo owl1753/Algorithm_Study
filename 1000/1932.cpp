@@ -1,5 +1,5 @@
-#pragma warining(disable:4996)
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int dp[501][501];
@@ -8,9 +8,8 @@ int tri[501][501];
 int main()
 {
 	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-	int n, max = 0;
+	cin.tie(NULL); cout.tie(NULL);
+	int n, result = 0;
 	cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
@@ -34,13 +33,12 @@ int main()
 			}
 			else
 			{
-				dp[i][j] = tri[i][j] + (dp[i - 1][j - 1] >= dp[i - 1][j] ? dp[i - 1][j - 1] : dp[i - 1][j]);
-			}
-			if (dp[i][j] > max)
-			{
-				max = dp[i][j];
+				dp[i][j] = tri[i][j] + max(dp[i - 1][j - 1], dp[i - 1][j]);
 			}
 		}
 	}
-	cout << max;
+	for (int i = 1; i <= n; i++) {
+		result = max(result, dp[n][i]);
+	}
+	cout << result;
 }
